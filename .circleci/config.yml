@@ -37,7 +37,7 @@ workflows:
       - orb-tools/publish:
           enable_pr_comment: false
           filters: *filters
-          orb_name: codecov/codecov
+          orb_name: vEpiphyte/codecov
           pub_type: dev
           vcs_type: << pipeline.project.type >>
           requires: [orb-tools/lint, orb-tools/review, orb-tools/pack]
@@ -46,7 +46,7 @@ workflows:
       # dev:${CIRCLE_SHA1:0:7} version of your orb
       - orb-tools/continue:
           filters: *filters
-          orb_name: codecov/codecov
+          orb_name: vEpiphyte/codecov
           pipeline_number: << pipeline.number >>
           requires: [orb-tools/publish]
           vcs_type: << pipeline.project.type >>

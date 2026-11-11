@@ -1,7 +1,7 @@
 ---
 version: 2.1
 orbs:
-  codecov: codecov/codecov@dev:alpha
+  codecov: vEpiphyte/codecov@dev:alpha
   node: circleci/node@5
   orb-tools: circleci/orb-tools@12
   python: circleci/python@2
@@ -211,7 +211,7 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
-          orb_name: codecov/codecov
+          orb_name: vEpiphyte/codecov
           pub_type: production
           requires:
             - Pack (deploy)
