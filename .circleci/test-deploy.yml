@@ -94,29 +94,30 @@ jobs:
       - codecov/upload
     environment:
       ENV_VAR_CONTAINING_FLAG: env_var_flag
-  test-macos:
-    macos:
-      xcode: 14.3.1
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - codecov/upload:
-          flags: backend
-      - codecov/upload:
-          fail_on_error: true
-          files: coverage/coverage-final.json
-          flags: frontend
-          verbose: true
-      - codecov/upload:
-          files: coverage/coverage-final.json
-          flags: macos
-          version: v0.7.4
-      - codecov/upload:
-          flags: string_flag,ENV_VAR_CONTAINING_FLAG
-      - codecov/upload
-    environment:
-      ENV_VAR_CONTAINING_FLAG: env_var_flag
+  # macOS executors need a paid CircleCI plan, which this fork does not have.
+  # test-macos:
+    # macos:
+      # xcode: 14.3.1
+    # steps:
+      # - checkout
+      # - attach_workspace:
+          # at: .
+      # - codecov/upload:
+          # flags: backend
+      # - codecov/upload:
+          # fail_on_error: true
+          # files: coverage/coverage-final.json
+          # flags: frontend
+          # verbose: true
+      # - codecov/upload:
+          # files: coverage/coverage-final.json
+          # flags: macos
+          # version: v0.7.4
+      # - codecov/upload:
+          # flags: string_flag,ENV_VAR_CONTAINING_FLAG
+      # - codecov/upload
+    # environment:
+      # ENV_VAR_CONTAINING_FLAG: env_var_flag
   test-windows:
     executor:
       name: win/default
@@ -160,13 +161,14 @@ workflows:
               ignore: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires: [test-backend, test-frontend]
 
-      - test-macos:
-          filters:
-            branches:
-              only: /.*/
-            tags:
-              ignore: /^v[0-9]+\.[0-9]+\.[0-9]+$/
-          requires: [test-backend, test-frontend]
+      # test-macos is disabled; see its job definition.
+      # - test-macos:
+          # filters:
+            # branches:
+              # only: /.*/
+            # tags:
+              # ignore: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          # requires: [test-backend, test-frontend]
 
       - test-windows:
           filters:
@@ -188,7 +190,7 @@ workflows:
             - run: git submodule init
             - run: git submodule update --remote
           checkout: false
-          requires: [test-linux, test-macos, test-windows]
+          requires: [test-linux, test-windows]
 
       - orb-tools/pack:
           name: Pack (deploy)
